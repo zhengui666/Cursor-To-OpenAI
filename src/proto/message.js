@@ -9,6 +9,752 @@ var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.ut
 // Exported root namespace
 var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
+/**
+ * ClientSideToolV2 enum.
+ * @exports ClientSideToolV2
+ * @enum {number}
+ * @property {number} CLIENT_SIDE_TOOL_V2_UNSPECIFIED=0 CLIENT_SIDE_TOOL_V2_UNSPECIFIED value
+ * @property {number} CLIENT_SIDE_TOOL_V2_READ_SEMSEARCH_FILES=1 CLIENT_SIDE_TOOL_V2_READ_SEMSEARCH_FILES value
+ * @property {number} CLIENT_SIDE_TOOL_V2_READ_FILE_FOR_IMPORTS=2 CLIENT_SIDE_TOOL_V2_READ_FILE_FOR_IMPORTS value
+ * @property {number} CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH=3 CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH value
+ * @property {number} CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND=4 CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND value
+ * @property {number} CLIENT_SIDE_TOOL_V2_READ_FILE=5 CLIENT_SIDE_TOOL_V2_READ_FILE value
+ * @property {number} CLIENT_SIDE_TOOL_V2_LIST_DIR=6 CLIENT_SIDE_TOOL_V2_LIST_DIR value
+ * @property {number} CLIENT_SIDE_TOOL_V2_EDIT_FILE=7 CLIENT_SIDE_TOOL_V2_EDIT_FILE value
+ * @property {number} CLIENT_SIDE_TOOL_V2_FILE_SEARCH=8 CLIENT_SIDE_TOOL_V2_FILE_SEARCH value
+ * @property {number} CLIENT_SIDE_TOOL_V2_SEMANTIC_SEARCH_FULL=9 CLIENT_SIDE_TOOL_V2_SEMANTIC_SEARCH_FULL value
+ * @property {number} CLIENT_SIDE_TOOL_V2_CREATE_FILE=10 CLIENT_SIDE_TOOL_V2_CREATE_FILE value
+ * @property {number} CLIENT_SIDE_TOOL_V2_DELETE_FILE=11 CLIENT_SIDE_TOOL_V2_DELETE_FILE value
+ * @property {number} CLIENT_SIDE_TOOL_V2_REAPPLY=12 CLIENT_SIDE_TOOL_V2_REAPPLY value
+ * @property {number} CLIENT_SIDE_TOOL_V2_GET_RELATED_FILES=13 CLIENT_SIDE_TOOL_V2_GET_RELATED_FILES value
+ * @property {number} CLIENT_SIDE_TOOL_V2_PARALLEL_APPLY=14 CLIENT_SIDE_TOOL_V2_PARALLEL_APPLY value
+ * @property {number} CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND_V2=15 CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND_V2 value
+ * @property {number} CLIENT_SIDE_TOOL_V2_FETCH_RULES=16 CLIENT_SIDE_TOOL_V2_FETCH_RULES value
+ * @property {number} CLIENT_SIDE_TOOL_V2_PLANNER=17 CLIENT_SIDE_TOOL_V2_PLANNER value
+ * @property {number} CLIENT_SIDE_TOOL_V2_WEB_SEARCH=18 CLIENT_SIDE_TOOL_V2_WEB_SEARCH value
+ * @property {number} CLIENT_SIDE_TOOL_V2_MCP=19 CLIENT_SIDE_TOOL_V2_MCP value
+ * @property {number} CLIENT_SIDE_TOOL_V2_WEB_VIEWER=20 CLIENT_SIDE_TOOL_V2_WEB_VIEWER value
+ * @property {number} CLIENT_SIDE_TOOL_V2_DIFF_HISTORY=21 CLIENT_SIDE_TOOL_V2_DIFF_HISTORY value
+ * @property {number} CLIENT_SIDE_TOOL_V2_IMPLEMENTER=22 CLIENT_SIDE_TOOL_V2_IMPLEMENTER value
+ * @property {number} CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS=23 CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS value
+ * @property {number} CLIENT_SIDE_TOOL_V2_BACKGROUND_COMPOSER_FOLLOWUP=24 CLIENT_SIDE_TOOL_V2_BACKGROUND_COMPOSER_FOLLOWUP value
+ */
+$root.ClientSideToolV2 = (function() {
+    var valuesById = {}, values = Object.create(valuesById);
+    values[valuesById[0] = "CLIENT_SIDE_TOOL_V2_UNSPECIFIED"] = 0;
+    values[valuesById[1] = "CLIENT_SIDE_TOOL_V2_READ_SEMSEARCH_FILES"] = 1;
+    values[valuesById[2] = "CLIENT_SIDE_TOOL_V2_READ_FILE_FOR_IMPORTS"] = 2;
+    values[valuesById[3] = "CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH"] = 3;
+    values[valuesById[4] = "CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND"] = 4;
+    values[valuesById[5] = "CLIENT_SIDE_TOOL_V2_READ_FILE"] = 5;
+    values[valuesById[6] = "CLIENT_SIDE_TOOL_V2_LIST_DIR"] = 6;
+    values[valuesById[7] = "CLIENT_SIDE_TOOL_V2_EDIT_FILE"] = 7;
+    values[valuesById[8] = "CLIENT_SIDE_TOOL_V2_FILE_SEARCH"] = 8;
+    values[valuesById[9] = "CLIENT_SIDE_TOOL_V2_SEMANTIC_SEARCH_FULL"] = 9;
+    values[valuesById[10] = "CLIENT_SIDE_TOOL_V2_CREATE_FILE"] = 10;
+    values[valuesById[11] = "CLIENT_SIDE_TOOL_V2_DELETE_FILE"] = 11;
+    values[valuesById[12] = "CLIENT_SIDE_TOOL_V2_REAPPLY"] = 12;
+    values[valuesById[13] = "CLIENT_SIDE_TOOL_V2_GET_RELATED_FILES"] = 13;
+    values[valuesById[14] = "CLIENT_SIDE_TOOL_V2_PARALLEL_APPLY"] = 14;
+    values[valuesById[15] = "CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND_V2"] = 15;
+    values[valuesById[16] = "CLIENT_SIDE_TOOL_V2_FETCH_RULES"] = 16;
+    values[valuesById[17] = "CLIENT_SIDE_TOOL_V2_PLANNER"] = 17;
+    values[valuesById[18] = "CLIENT_SIDE_TOOL_V2_WEB_SEARCH"] = 18;
+    values[valuesById[19] = "CLIENT_SIDE_TOOL_V2_MCP"] = 19;
+    values[valuesById[20] = "CLIENT_SIDE_TOOL_V2_WEB_VIEWER"] = 20;
+    values[valuesById[21] = "CLIENT_SIDE_TOOL_V2_DIFF_HISTORY"] = 21;
+    values[valuesById[22] = "CLIENT_SIDE_TOOL_V2_IMPLEMENTER"] = 22;
+    values[valuesById[23] = "CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS"] = 23;
+    values[valuesById[24] = "CLIENT_SIDE_TOOL_V2_BACKGROUND_COMPOSER_FOLLOWUP"] = 24;
+    return values;
+})();
+
+$root.ClientSideToolV2Call = (function() {
+
+    /**
+     * Properties of a ClientSideToolV2Call.
+     * @exports IClientSideToolV2Call
+     * @interface IClientSideToolV2Call
+     * @property {ClientSideToolV2|null} [tool] ClientSideToolV2Call tool
+     * @property {string|null} [toolCallId] ClientSideToolV2Call toolCallId
+     * @property {string|null} [name] ClientSideToolV2Call name
+     * @property {google.protobuf.IStruct|null} ["arguments"] ClientSideToolV2Call arguments
+     */
+
+    /**
+     * Constructs a new ClientSideToolV2Call.
+     * @exports ClientSideToolV2Call
+     * @classdesc Represents a ClientSideToolV2Call.
+     * @implements IClientSideToolV2Call
+     * @constructor
+     * @param {IClientSideToolV2Call=} [properties] Properties to set
+     */
+    function ClientSideToolV2Call(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * ClientSideToolV2Call tool.
+     * @member {ClientSideToolV2} tool
+     * @memberof ClientSideToolV2Call
+     * @instance
+     */
+    ClientSideToolV2Call.prototype.tool = 0;
+
+    /**
+     * ClientSideToolV2Call toolCallId.
+     * @member {string} toolCallId
+     * @memberof ClientSideToolV2Call
+     * @instance
+     */
+    ClientSideToolV2Call.prototype.toolCallId = "";
+
+    /**
+     * ClientSideToolV2Call name.
+     * @member {string} name
+     * @memberof ClientSideToolV2Call
+     * @instance
+     */
+    ClientSideToolV2Call.prototype.name = "";
+
+    /**
+     * ClientSideToolV2Call arguments.
+     * @member {google.protobuf.IStruct|null|undefined} arguments
+     * @memberof ClientSideToolV2Call
+     * @instance
+     */
+    ClientSideToolV2Call.prototype["arguments"] = null;
+
+    /**
+     * Creates a new ClientSideToolV2Call instance using the specified properties.
+     * @function create
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {IClientSideToolV2Call=} [properties] Properties to set
+     * @returns {ClientSideToolV2Call} ClientSideToolV2Call instance
+     */
+    ClientSideToolV2Call.create = function create(properties) {
+        return new ClientSideToolV2Call(properties);
+    };
+
+    /**
+     * Encodes the specified ClientSideToolV2Call message. Does not implicitly {@link ClientSideToolV2Call.verify|verify} messages.
+     * @function encode
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {IClientSideToolV2Call} message ClientSideToolV2Call message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ClientSideToolV2Call.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.tool != null && Object.hasOwnProperty.call(message, "tool"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.tool);
+        if (message.toolCallId != null && Object.hasOwnProperty.call(message, "toolCallId"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.toolCallId);
+        if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.name);
+        if (message["arguments"] != null && Object.hasOwnProperty.call(message, "arguments"))
+            $root.google.protobuf.Struct.encode(message["arguments"], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+        return writer;
+    };
+
+    /**
+     * Encodes the specified ClientSideToolV2Call message, length delimited. Does not implicitly {@link ClientSideToolV2Call.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {IClientSideToolV2Call} message ClientSideToolV2Call message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ClientSideToolV2Call.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a ClientSideToolV2Call message from the specified reader or buffer.
+     * @function decode
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {ClientSideToolV2Call} ClientSideToolV2Call
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ClientSideToolV2Call.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ClientSideToolV2Call();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.tool = reader.int32();
+                    break;
+                }
+            case 2: {
+                    message.toolCallId = reader.string();
+                    break;
+                }
+            case 3: {
+                    message.name = reader.string();
+                    break;
+                }
+            case 4: {
+                    message["arguments"] = $root.google.protobuf.Struct.decode(reader, reader.uint32());
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a ClientSideToolV2Call message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {ClientSideToolV2Call} ClientSideToolV2Call
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ClientSideToolV2Call.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a ClientSideToolV2Call message.
+     * @function verify
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    ClientSideToolV2Call.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.tool != null && message.hasOwnProperty("tool"))
+            switch (message.tool) {
+            default:
+                return "tool: enum value expected";
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+            case 23:
+            case 24:
+                break;
+            }
+        if (message.toolCallId != null && message.hasOwnProperty("toolCallId"))
+            if (!$util.isString(message.toolCallId))
+                return "toolCallId: string expected";
+        if (message.name != null && message.hasOwnProperty("name"))
+            if (!$util.isString(message.name))
+                return "name: string expected";
+        if (message["arguments"] != null && message.hasOwnProperty("arguments")) {
+            var error = $root.google.protobuf.Struct.verify(message["arguments"]);
+            if (error)
+                return "arguments." + error;
+        }
+        return null;
+    };
+
+    /**
+     * Creates a ClientSideToolV2Call message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ClientSideToolV2Call} ClientSideToolV2Call
+     */
+    ClientSideToolV2Call.fromObject = function fromObject(object) {
+        if (object instanceof $root.ClientSideToolV2Call)
+            return object;
+        var message = new $root.ClientSideToolV2Call();
+        switch (object.tool) {
+        default:
+            if (typeof object.tool === "number") {
+                message.tool = object.tool;
+                break;
+            }
+            break;
+        case "CLIENT_SIDE_TOOL_V2_UNSPECIFIED":
+        case 0:
+            message.tool = 0;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_READ_SEMSEARCH_FILES":
+        case 1:
+            message.tool = 1;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_READ_FILE_FOR_IMPORTS":
+        case 2:
+            message.tool = 2;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH":
+        case 3:
+            message.tool = 3;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND":
+        case 4:
+            message.tool = 4;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_READ_FILE":
+        case 5:
+            message.tool = 5;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_LIST_DIR":
+        case 6:
+            message.tool = 6;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_EDIT_FILE":
+        case 7:
+            message.tool = 7;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_FILE_SEARCH":
+        case 8:
+            message.tool = 8;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_SEMANTIC_SEARCH_FULL":
+        case 9:
+            message.tool = 9;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_CREATE_FILE":
+        case 10:
+            message.tool = 10;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_DELETE_FILE":
+        case 11:
+            message.tool = 11;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_REAPPLY":
+        case 12:
+            message.tool = 12;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_GET_RELATED_FILES":
+        case 13:
+            message.tool = 13;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_PARALLEL_APPLY":
+        case 14:
+            message.tool = 14;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND_V2":
+        case 15:
+            message.tool = 15;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_FETCH_RULES":
+        case 16:
+            message.tool = 16;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_PLANNER":
+        case 17:
+            message.tool = 17;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_WEB_SEARCH":
+        case 18:
+            message.tool = 18;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_MCP":
+        case 19:
+            message.tool = 19;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_WEB_VIEWER":
+        case 20:
+            message.tool = 20;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_DIFF_HISTORY":
+        case 21:
+            message.tool = 21;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_IMPLEMENTER":
+        case 22:
+            message.tool = 22;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS":
+        case 23:
+            message.tool = 23;
+            break;
+        case "CLIENT_SIDE_TOOL_V2_BACKGROUND_COMPOSER_FOLLOWUP":
+        case 24:
+            message.tool = 24;
+            break;
+        }
+        if (object.toolCallId != null)
+            message.toolCallId = String(object.toolCallId);
+        if (object.name != null)
+            message.name = String(object.name);
+        if (object["arguments"] != null) {
+            if (typeof object["arguments"] !== "object")
+                throw TypeError(".ClientSideToolV2Call.arguments: object expected");
+            message["arguments"] = $root.google.protobuf.Struct.fromObject(object["arguments"]);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ClientSideToolV2Call message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {ClientSideToolV2Call} message ClientSideToolV2Call
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ClientSideToolV2Call.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.tool = options.enums === String ? "CLIENT_SIDE_TOOL_V2_UNSPECIFIED" : 0;
+            object.toolCallId = "";
+            object.name = "";
+            object["arguments"] = null;
+        }
+        if (message.tool != null && message.hasOwnProperty("tool"))
+            object.tool = options.enums === String ? $root.ClientSideToolV2[message.tool] === undefined ? message.tool : $root.ClientSideToolV2[message.tool] : message.tool;
+        if (message.toolCallId != null && message.hasOwnProperty("toolCallId"))
+            object.toolCallId = message.toolCallId;
+        if (message.name != null && message.hasOwnProperty("name"))
+            object.name = message.name;
+        if (message["arguments"] != null && message.hasOwnProperty("arguments"))
+            object["arguments"] = $root.google.protobuf.Struct.toObject(message["arguments"], options);
+        return object;
+    };
+
+    /**
+     * Converts this ClientSideToolV2Call to JSON.
+     * @function toJSON
+     * @memberof ClientSideToolV2Call
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ClientSideToolV2Call.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for ClientSideToolV2Call
+     * @function getTypeUrl
+     * @memberof ClientSideToolV2Call
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    ClientSideToolV2Call.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/ClientSideToolV2Call";
+    };
+
+    return ClientSideToolV2Call;
+})();
+
+$root.ClientSideToolV2Result = (function() {
+
+    /**
+     * Properties of a ClientSideToolV2Result.
+     * @exports IClientSideToolV2Result
+     * @interface IClientSideToolV2Result
+     * @property {string|null} [success] ClientSideToolV2Result success
+     * @property {string|null} [error] ClientSideToolV2Result error
+     * @property {string|null} [modelVisibleErrorMessage] ClientSideToolV2Result modelVisibleErrorMessage
+     */
+
+    /**
+     * Constructs a new ClientSideToolV2Result.
+     * @exports ClientSideToolV2Result
+     * @classdesc Represents a ClientSideToolV2Result.
+     * @implements IClientSideToolV2Result
+     * @constructor
+     * @param {IClientSideToolV2Result=} [properties] Properties to set
+     */
+    function ClientSideToolV2Result(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * ClientSideToolV2Result success.
+     * @member {string|null|undefined} success
+     * @memberof ClientSideToolV2Result
+     * @instance
+     */
+    ClientSideToolV2Result.prototype.success = null;
+
+    /**
+     * ClientSideToolV2Result error.
+     * @member {string|null|undefined} error
+     * @memberof ClientSideToolV2Result
+     * @instance
+     */
+    ClientSideToolV2Result.prototype.error = null;
+
+    /**
+     * ClientSideToolV2Result modelVisibleErrorMessage.
+     * @member {string} modelVisibleErrorMessage
+     * @memberof ClientSideToolV2Result
+     * @instance
+     */
+    ClientSideToolV2Result.prototype.modelVisibleErrorMessage = "";
+
+    // OneOf field names bound to virtual getters and setters
+    var $oneOfFields;
+
+    /**
+     * ClientSideToolV2Result result.
+     * @member {"success"|"error"|undefined} result
+     * @memberof ClientSideToolV2Result
+     * @instance
+     */
+    Object.defineProperty(ClientSideToolV2Result.prototype, "result", {
+        get: $util.oneOfGetter($oneOfFields = ["success", "error"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * Creates a new ClientSideToolV2Result instance using the specified properties.
+     * @function create
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {IClientSideToolV2Result=} [properties] Properties to set
+     * @returns {ClientSideToolV2Result} ClientSideToolV2Result instance
+     */
+    ClientSideToolV2Result.create = function create(properties) {
+        return new ClientSideToolV2Result(properties);
+    };
+
+    /**
+     * Encodes the specified ClientSideToolV2Result message. Does not implicitly {@link ClientSideToolV2Result.verify|verify} messages.
+     * @function encode
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {IClientSideToolV2Result} message ClientSideToolV2Result message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ClientSideToolV2Result.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.success != null && Object.hasOwnProperty.call(message, "success"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.success);
+        if (message.error != null && Object.hasOwnProperty.call(message, "error"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.error);
+        if (message.modelVisibleErrorMessage != null && Object.hasOwnProperty.call(message, "modelVisibleErrorMessage"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.modelVisibleErrorMessage);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified ClientSideToolV2Result message, length delimited. Does not implicitly {@link ClientSideToolV2Result.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {IClientSideToolV2Result} message ClientSideToolV2Result message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ClientSideToolV2Result.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a ClientSideToolV2Result message from the specified reader or buffer.
+     * @function decode
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {ClientSideToolV2Result} ClientSideToolV2Result
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ClientSideToolV2Result.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ClientSideToolV2Result();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.success = reader.string();
+                    break;
+                }
+            case 2: {
+                    message.error = reader.string();
+                    break;
+                }
+            case 3: {
+                    message.modelVisibleErrorMessage = reader.string();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a ClientSideToolV2Result message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {ClientSideToolV2Result} ClientSideToolV2Result
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ClientSideToolV2Result.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a ClientSideToolV2Result message.
+     * @function verify
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    ClientSideToolV2Result.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        var properties = {};
+        if (message.success != null && message.hasOwnProperty("success")) {
+            properties.result = 1;
+            if (!$util.isString(message.success))
+                return "success: string expected";
+        }
+        if (message.error != null && message.hasOwnProperty("error")) {
+            if (properties.result === 1)
+                return "result: multiple values";
+            properties.result = 1;
+            if (!$util.isString(message.error))
+                return "error: string expected";
+        }
+        if (message.modelVisibleErrorMessage != null && message.hasOwnProperty("modelVisibleErrorMessage"))
+            if (!$util.isString(message.modelVisibleErrorMessage))
+                return "modelVisibleErrorMessage: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a ClientSideToolV2Result message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ClientSideToolV2Result} ClientSideToolV2Result
+     */
+    ClientSideToolV2Result.fromObject = function fromObject(object) {
+        if (object instanceof $root.ClientSideToolV2Result)
+            return object;
+        var message = new $root.ClientSideToolV2Result();
+        if (object.success != null)
+            message.success = String(object.success);
+        if (object.error != null)
+            message.error = String(object.error);
+        if (object.modelVisibleErrorMessage != null)
+            message.modelVisibleErrorMessage = String(object.modelVisibleErrorMessage);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ClientSideToolV2Result message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {ClientSideToolV2Result} message ClientSideToolV2Result
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ClientSideToolV2Result.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.modelVisibleErrorMessage = "";
+        if (message.success != null && message.hasOwnProperty("success")) {
+            object.success = message.success;
+            if (options.oneofs)
+                object.result = "success";
+        }
+        if (message.error != null && message.hasOwnProperty("error")) {
+            object.error = message.error;
+            if (options.oneofs)
+                object.result = "error";
+        }
+        if (message.modelVisibleErrorMessage != null && message.hasOwnProperty("modelVisibleErrorMessage"))
+            object.modelVisibleErrorMessage = message.modelVisibleErrorMessage;
+        return object;
+    };
+
+    /**
+     * Converts this ClientSideToolV2Result to JSON.
+     * @function toJSON
+     * @memberof ClientSideToolV2Result
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ClientSideToolV2Result.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for ClientSideToolV2Result
+     * @function getTypeUrl
+     * @memberof ClientSideToolV2Result
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    ClientSideToolV2Result.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/ClientSideToolV2Result";
+    };
+
+    return ClientSideToolV2Result;
+})();
+
 $root.AvailableModelsResponse = (function() {
 
     /**
@@ -1275,6 +2021,7 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
          * @property {Array.<StreamUnifiedChatWithToolsRequest.Request.IMessageId>|null} [messageIds] Request messageIds
          * @property {number|null} [largeContext] Request largeContext
          * @property {number|null} [unknown38] Request unknown38
+         * @property {Array.<ClientSideToolV2>|null} [clientSideToolV2s] Request clientSideToolV2s
          * @property {number|null} [chatModeEnum] Request chatModeEnum
          * @property {string|null} [unknown47] Request unknown47
          * @property {number|null} [unknown48] Request unknown48
@@ -1282,6 +2029,7 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
          * @property {number|null} [unknown51] Request unknown51
          * @property {number|null} [unknown53] Request unknown53
          * @property {string|null} [chatMode] Request chatMode
+         * @property {string|null} [toolChoice] Request toolChoice
          */
 
         /**
@@ -1296,6 +2044,7 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
             this.messages = [];
             this.wikiTool = [];
             this.messageIds = [];
+            this.clientSideToolV2s = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1447,6 +2196,14 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
         Request.prototype.unknown38 = 0;
 
         /**
+         * Request clientSideToolV2s.
+         * @member {Array.<ClientSideToolV2>} clientSideToolV2s
+         * @memberof StreamUnifiedChatWithToolsRequest.Request
+         * @instance
+         */
+        Request.prototype.clientSideToolV2s = $util.emptyArray;
+
+        /**
          * Request chatModeEnum.
          * @member {number} chatModeEnum
          * @memberof StreamUnifiedChatWithToolsRequest.Request
@@ -1501,6 +2258,14 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
          * @instance
          */
         Request.prototype.chatMode = "";
+
+        /**
+         * Request toolChoice.
+         * @member {string} toolChoice
+         * @memberof StreamUnifiedChatWithToolsRequest.Request
+         * @instance
+         */
+        Request.prototype.toolChoice = "";
 
         /**
          * Creates a new Request instance using the specified properties.
@@ -1565,6 +2330,12 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 writer.uint32(/* id 35, wireType 0 =*/280).int32(message.largeContext);
             if (message.unknown38 != null && Object.hasOwnProperty.call(message, "unknown38"))
                 writer.uint32(/* id 38, wireType 0 =*/304).int32(message.unknown38);
+            if (message.clientSideToolV2s != null && message.clientSideToolV2s.length) {
+                writer.uint32(/* id 40, wireType 2 =*/322).fork();
+                for (var i = 0; i < message.clientSideToolV2s.length; ++i)
+                    writer.int32(message.clientSideToolV2s[i]);
+                writer.ldelim();
+            }
             if (message.chatModeEnum != null && Object.hasOwnProperty.call(message, "chatModeEnum"))
                 writer.uint32(/* id 46, wireType 0 =*/368).int32(message.chatModeEnum);
             if (message.unknown47 != null && Object.hasOwnProperty.call(message, "unknown47"))
@@ -1579,6 +2350,8 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 writer.uint32(/* id 53, wireType 0 =*/424).int32(message.unknown53);
             if (message.chatMode != null && Object.hasOwnProperty.call(message, "chatMode"))
                 writer.uint32(/* id 54, wireType 2 =*/434).string(message.chatMode);
+            if (message.toolChoice != null && Object.hasOwnProperty.call(message, "toolChoice"))
+                writer.uint32(/* id 55, wireType 2 =*/442).string(message.toolChoice);
             return writer;
         };
 
@@ -1691,6 +2464,17 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                         message.unknown38 = reader.int32();
                         break;
                     }
+                case 40: {
+                        if (!(message.clientSideToolV2s && message.clientSideToolV2s.length))
+                            message.clientSideToolV2s = [];
+                        if ((tag & 7) === 2) {
+                            var end2 = reader.uint32() + reader.pos;
+                            while (reader.pos < end2)
+                                message.clientSideToolV2s.push(reader.int32());
+                        } else
+                            message.clientSideToolV2s.push(reader.int32());
+                        break;
+                    }
                 case 46: {
                         message.chatModeEnum = reader.int32();
                         break;
@@ -1717,6 +2501,10 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                     }
                 case 54: {
                         message.chatMode = reader.string();
+                        break;
+                    }
+                case 55: {
+                        message.toolChoice = reader.string();
                         break;
                     }
                 default:
@@ -1832,6 +2620,41 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
             if (message.unknown38 != null && message.hasOwnProperty("unknown38"))
                 if (!$util.isInteger(message.unknown38))
                     return "unknown38: integer expected";
+            if (message.clientSideToolV2s != null && message.hasOwnProperty("clientSideToolV2s")) {
+                if (!Array.isArray(message.clientSideToolV2s))
+                    return "clientSideToolV2s: array expected";
+                for (var i = 0; i < message.clientSideToolV2s.length; ++i)
+                    switch (message.clientSideToolV2s[i]) {
+                    default:
+                        return "clientSideToolV2s: enum value[] expected";
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                    case 21:
+                    case 22:
+                    case 23:
+                    case 24:
+                        break;
+                    }
+            }
             if (message.chatModeEnum != null && message.hasOwnProperty("chatModeEnum"))
                 if (!$util.isInteger(message.chatModeEnum))
                     return "chatModeEnum: integer expected";
@@ -1853,6 +2676,9 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
             if (message.chatMode != null && message.hasOwnProperty("chatMode"))
                 if (!$util.isString(message.chatMode))
                     return "chatMode: string expected";
+            if (message.toolChoice != null && message.hasOwnProperty("toolChoice"))
+                if (!$util.isString(message.toolChoice))
+                    return "toolChoice: string expected";
             return null;
         };
 
@@ -1937,6 +2763,119 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 message.largeContext = object.largeContext | 0;
             if (object.unknown38 != null)
                 message.unknown38 = object.unknown38 | 0;
+            if (object.clientSideToolV2s) {
+                if (!Array.isArray(object.clientSideToolV2s))
+                    throw TypeError(".StreamUnifiedChatWithToolsRequest.Request.clientSideToolV2s: array expected");
+                message.clientSideToolV2s = [];
+                for (var i = 0; i < object.clientSideToolV2s.length; ++i)
+                    switch (object.clientSideToolV2s[i]) {
+                    default:
+                        if (typeof object.clientSideToolV2s[i] === "number") {
+                            message.clientSideToolV2s[i] = object.clientSideToolV2s[i];
+                            break;
+                        }
+                    case "CLIENT_SIDE_TOOL_V2_UNSPECIFIED":
+                    case 0:
+                        message.clientSideToolV2s[i] = 0;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_READ_SEMSEARCH_FILES":
+                    case 1:
+                        message.clientSideToolV2s[i] = 1;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_READ_FILE_FOR_IMPORTS":
+                    case 2:
+                        message.clientSideToolV2s[i] = 2;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH":
+                    case 3:
+                        message.clientSideToolV2s[i] = 3;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND":
+                    case 4:
+                        message.clientSideToolV2s[i] = 4;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_READ_FILE":
+                    case 5:
+                        message.clientSideToolV2s[i] = 5;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_LIST_DIR":
+                    case 6:
+                        message.clientSideToolV2s[i] = 6;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_EDIT_FILE":
+                    case 7:
+                        message.clientSideToolV2s[i] = 7;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_FILE_SEARCH":
+                    case 8:
+                        message.clientSideToolV2s[i] = 8;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_SEMANTIC_SEARCH_FULL":
+                    case 9:
+                        message.clientSideToolV2s[i] = 9;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_CREATE_FILE":
+                    case 10:
+                        message.clientSideToolV2s[i] = 10;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_DELETE_FILE":
+                    case 11:
+                        message.clientSideToolV2s[i] = 11;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_REAPPLY":
+                    case 12:
+                        message.clientSideToolV2s[i] = 12;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_GET_RELATED_FILES":
+                    case 13:
+                        message.clientSideToolV2s[i] = 13;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_PARALLEL_APPLY":
+                    case 14:
+                        message.clientSideToolV2s[i] = 14;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND_V2":
+                    case 15:
+                        message.clientSideToolV2s[i] = 15;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_FETCH_RULES":
+                    case 16:
+                        message.clientSideToolV2s[i] = 16;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_PLANNER":
+                    case 17:
+                        message.clientSideToolV2s[i] = 17;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_WEB_SEARCH":
+                    case 18:
+                        message.clientSideToolV2s[i] = 18;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_MCP":
+                    case 19:
+                        message.clientSideToolV2s[i] = 19;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_WEB_VIEWER":
+                    case 20:
+                        message.clientSideToolV2s[i] = 20;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_DIFF_HISTORY":
+                    case 21:
+                        message.clientSideToolV2s[i] = 21;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_IMPLEMENTER":
+                    case 22:
+                        message.clientSideToolV2s[i] = 22;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS":
+                    case 23:
+                        message.clientSideToolV2s[i] = 23;
+                        break;
+                    case "CLIENT_SIDE_TOOL_V2_BACKGROUND_COMPOSER_FOLLOWUP":
+                    case 24:
+                        message.clientSideToolV2s[i] = 24;
+                        break;
+                    }
+            }
             if (object.chatModeEnum != null)
                 message.chatModeEnum = object.chatModeEnum | 0;
             if (object.unknown47 != null)
@@ -1951,6 +2890,8 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 message.unknown53 = object.unknown53 | 0;
             if (object.chatMode != null)
                 message.chatMode = String(object.chatMode);
+            if (object.toolChoice != null)
+                message.toolChoice = String(object.toolChoice);
             return message;
         };
 
@@ -1971,6 +2912,7 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 object.messages = [];
                 object.wikiTool = [];
                 object.messageIds = [];
+                object.clientSideToolV2s = [];
             }
             if (options.defaults) {
                 object.unknown2 = 0;
@@ -1995,6 +2937,7 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 object.unknown51 = 0;
                 object.unknown53 = 0;
                 object.chatMode = "";
+                object.toolChoice = "";
             }
             if (message.messages && message.messages.length) {
                 object.messages = [];
@@ -2041,6 +2984,11 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 object.largeContext = message.largeContext;
             if (message.unknown38 != null && message.hasOwnProperty("unknown38"))
                 object.unknown38 = message.unknown38;
+            if (message.clientSideToolV2s && message.clientSideToolV2s.length) {
+                object.clientSideToolV2s = [];
+                for (var j = 0; j < message.clientSideToolV2s.length; ++j)
+                    object.clientSideToolV2s[j] = options.enums === String ? $root.ClientSideToolV2[message.clientSideToolV2s[j]] === undefined ? message.clientSideToolV2s[j] : $root.ClientSideToolV2[message.clientSideToolV2s[j]] : message.clientSideToolV2s[j];
+            }
             if (message.chatModeEnum != null && message.hasOwnProperty("chatModeEnum"))
                 object.chatModeEnum = message.chatModeEnum;
             if (message.unknown47 != null && message.hasOwnProperty("unknown47"))
@@ -2055,6 +3003,8 @@ $root.StreamUnifiedChatWithToolsRequest = (function() {
                 object.unknown53 = message.unknown53;
             if (message.chatMode != null && message.hasOwnProperty("chatMode"))
                 object.chatMode = message.chatMode;
+            if (message.toolChoice != null && message.hasOwnProperty("toolChoice"))
+                object.toolChoice = message.toolChoice;
             return object;
         };
 
@@ -4507,6 +5457,7 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
      * Properties of a StreamUnifiedChatWithToolsResponse.
      * @exports IStreamUnifiedChatWithToolsResponse
      * @interface IStreamUnifiedChatWithToolsResponse
+     * @property {IClientSideToolV2Call|null} [clientSideToolV2Call] StreamUnifiedChatWithToolsResponse clientSideToolV2Call
      * @property {StreamUnifiedChatWithToolsResponse.IMessage|null} [message] StreamUnifiedChatWithToolsResponse message
      * @property {IMessageSummary|null} [summary] StreamUnifiedChatWithToolsResponse summary
      */
@@ -4527,6 +5478,14 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
     }
 
     /**
+     * StreamUnifiedChatWithToolsResponse clientSideToolV2Call.
+     * @member {IClientSideToolV2Call|null|undefined} clientSideToolV2Call
+     * @memberof StreamUnifiedChatWithToolsResponse
+     * @instance
+     */
+    StreamUnifiedChatWithToolsResponse.prototype.clientSideToolV2Call = null;
+
+    /**
      * StreamUnifiedChatWithToolsResponse message.
      * @member {StreamUnifiedChatWithToolsResponse.IMessage|null|undefined} message
      * @memberof StreamUnifiedChatWithToolsResponse
@@ -4541,6 +5500,20 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
      * @instance
      */
     StreamUnifiedChatWithToolsResponse.prototype.summary = null;
+
+    // OneOf field names bound to virtual getters and setters
+    var $oneOfFields;
+
+    /**
+     * StreamUnifiedChatWithToolsResponse response.
+     * @member {"clientSideToolV2Call"|"message"|"summary"|undefined} response
+     * @memberof StreamUnifiedChatWithToolsResponse
+     * @instance
+     */
+    Object.defineProperty(StreamUnifiedChatWithToolsResponse.prototype, "response", {
+        get: $util.oneOfGetter($oneOfFields = ["clientSideToolV2Call", "message", "summary"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
 
     /**
      * Creates a new StreamUnifiedChatWithToolsResponse instance using the specified properties.
@@ -4566,6 +5539,8 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
     StreamUnifiedChatWithToolsResponse.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        if (message.clientSideToolV2Call != null && Object.hasOwnProperty.call(message, "clientSideToolV2Call"))
+            $root.ClientSideToolV2Call.encode(message.clientSideToolV2Call, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
         if (message.message != null && Object.hasOwnProperty.call(message, "message"))
             $root.StreamUnifiedChatWithToolsResponse.Message.encode(message.message, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
         if (message.summary != null && Object.hasOwnProperty.call(message, "summary"))
@@ -4604,6 +5579,10 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
+            case 1: {
+                    message.clientSideToolV2Call = $root.ClientSideToolV2Call.decode(reader, reader.uint32());
+                    break;
+                }
             case 2: {
                     message.message = $root.StreamUnifiedChatWithToolsResponse.Message.decode(reader, reader.uint32());
                     break;
@@ -4647,15 +5626,34 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
     StreamUnifiedChatWithToolsResponse.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
+        var properties = {};
+        if (message.clientSideToolV2Call != null && message.hasOwnProperty("clientSideToolV2Call")) {
+            properties.response = 1;
+            {
+                var error = $root.ClientSideToolV2Call.verify(message.clientSideToolV2Call);
+                if (error)
+                    return "clientSideToolV2Call." + error;
+            }
+        }
         if (message.message != null && message.hasOwnProperty("message")) {
-            var error = $root.StreamUnifiedChatWithToolsResponse.Message.verify(message.message);
-            if (error)
-                return "message." + error;
+            if (properties.response === 1)
+                return "response: multiple values";
+            properties.response = 1;
+            {
+                var error = $root.StreamUnifiedChatWithToolsResponse.Message.verify(message.message);
+                if (error)
+                    return "message." + error;
+            }
         }
         if (message.summary != null && message.hasOwnProperty("summary")) {
-            var error = $root.MessageSummary.verify(message.summary);
-            if (error)
-                return "summary." + error;
+            if (properties.response === 1)
+                return "response: multiple values";
+            properties.response = 1;
+            {
+                var error = $root.MessageSummary.verify(message.summary);
+                if (error)
+                    return "summary." + error;
+            }
         }
         return null;
     };
@@ -4672,6 +5670,11 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
         if (object instanceof $root.StreamUnifiedChatWithToolsResponse)
             return object;
         var message = new $root.StreamUnifiedChatWithToolsResponse();
+        if (object.clientSideToolV2Call != null) {
+            if (typeof object.clientSideToolV2Call !== "object")
+                throw TypeError(".StreamUnifiedChatWithToolsResponse.clientSideToolV2Call: object expected");
+            message.clientSideToolV2Call = $root.ClientSideToolV2Call.fromObject(object.clientSideToolV2Call);
+        }
         if (object.message != null) {
             if (typeof object.message !== "object")
                 throw TypeError(".StreamUnifiedChatWithToolsResponse.message: object expected");
@@ -4698,14 +5701,21 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
         if (!options)
             options = {};
         var object = {};
-        if (options.defaults) {
-            object.message = null;
-            object.summary = null;
+        if (message.clientSideToolV2Call != null && message.hasOwnProperty("clientSideToolV2Call")) {
+            object.clientSideToolV2Call = $root.ClientSideToolV2Call.toObject(message.clientSideToolV2Call, options);
+            if (options.oneofs)
+                object.response = "clientSideToolV2Call";
         }
-        if (message.message != null && message.hasOwnProperty("message"))
+        if (message.message != null && message.hasOwnProperty("message")) {
             object.message = $root.StreamUnifiedChatWithToolsResponse.Message.toObject(message.message, options);
-        if (message.summary != null && message.hasOwnProperty("summary"))
+            if (options.oneofs)
+                object.response = "message";
+        }
+        if (message.summary != null && message.hasOwnProperty("summary")) {
             object.summary = $root.MessageSummary.toObject(message.summary, options);
+            if (options.oneofs)
+                object.response = "summary";
+        }
         return object;
     };
 
@@ -5978,6 +6988,903 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
     })();
 
     return StreamUnifiedChatWithToolsResponse;
+})();
+
+$root.google = (function() {
+
+    /**
+     * Namespace google.
+     * @exports google
+     * @namespace
+     */
+    var google = {};
+
+    google.protobuf = (function() {
+
+        /**
+         * Namespace protobuf.
+         * @memberof google
+         * @namespace
+         */
+        var protobuf = {};
+
+        protobuf.Struct = (function() {
+
+            /**
+             * Properties of a Struct.
+             * @memberof google.protobuf
+             * @interface IStruct
+             * @property {Object.<string,google.protobuf.IValue>|null} [fields] Struct fields
+             */
+
+            /**
+             * Constructs a new Struct.
+             * @memberof google.protobuf
+             * @classdesc Represents a Struct.
+             * @implements IStruct
+             * @constructor
+             * @param {google.protobuf.IStruct=} [properties] Properties to set
+             */
+            function Struct(properties) {
+                this.fields = {};
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Struct fields.
+             * @member {Object.<string,google.protobuf.IValue>} fields
+             * @memberof google.protobuf.Struct
+             * @instance
+             */
+            Struct.prototype.fields = $util.emptyObject;
+
+            /**
+             * Creates a new Struct instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {google.protobuf.IStruct=} [properties] Properties to set
+             * @returns {google.protobuf.Struct} Struct instance
+             */
+            Struct.create = function create(properties) {
+                return new Struct(properties);
+            };
+
+            /**
+             * Encodes the specified Struct message. Does not implicitly {@link google.protobuf.Struct.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {google.protobuf.IStruct} message Struct message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Struct.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.fields != null && Object.hasOwnProperty.call(message, "fields"))
+                    for (var keys = Object.keys(message.fields), i = 0; i < keys.length; ++i) {
+                        writer.uint32(/* id 1, wireType 2 =*/10).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]);
+                        $root.google.protobuf.Value.encode(message.fields[keys[i]], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim().ldelim();
+                    }
+                return writer;
+            };
+
+            /**
+             * Encodes the specified Struct message, length delimited. Does not implicitly {@link google.protobuf.Struct.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {google.protobuf.IStruct} message Struct message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Struct.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a Struct message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.Struct} Struct
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Struct.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Struct(), key, value;
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1: {
+                            if (message.fields === $util.emptyObject)
+                                message.fields = {};
+                            var end2 = reader.uint32() + reader.pos;
+                            key = "";
+                            value = null;
+                            while (reader.pos < end2) {
+                                var tag2 = reader.uint32();
+                                switch (tag2 >>> 3) {
+                                case 1:
+                                    key = reader.string();
+                                    break;
+                                case 2:
+                                    value = $root.google.protobuf.Value.decode(reader, reader.uint32());
+                                    break;
+                                default:
+                                    reader.skipType(tag2 & 7);
+                                    break;
+                                }
+                            }
+                            message.fields[key] = value;
+                            break;
+                        }
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a Struct message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.Struct} Struct
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Struct.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a Struct message.
+             * @function verify
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            Struct.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.fields != null && message.hasOwnProperty("fields")) {
+                    if (!$util.isObject(message.fields))
+                        return "fields: object expected";
+                    var key = Object.keys(message.fields);
+                    for (var i = 0; i < key.length; ++i) {
+                        var error = $root.google.protobuf.Value.verify(message.fields[key[i]]);
+                        if (error)
+                            return "fields." + error;
+                    }
+                }
+                return null;
+            };
+
+            /**
+             * Creates a Struct message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.Struct} Struct
+             */
+            Struct.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.Struct)
+                    return object;
+                var message = new $root.google.protobuf.Struct();
+                if (object.fields) {
+                    if (typeof object.fields !== "object")
+                        throw TypeError(".google.protobuf.Struct.fields: object expected");
+                    message.fields = {};
+                    for (var keys = Object.keys(object.fields), i = 0; i < keys.length; ++i) {
+                        if (typeof object.fields[keys[i]] !== "object")
+                            throw TypeError(".google.protobuf.Struct.fields: object expected");
+                        message.fields[keys[i]] = $root.google.protobuf.Value.fromObject(object.fields[keys[i]]);
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a Struct message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {google.protobuf.Struct} message Struct
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            Struct.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.objects || options.defaults)
+                    object.fields = {};
+                var keys2;
+                if (message.fields && (keys2 = Object.keys(message.fields)).length) {
+                    object.fields = {};
+                    for (var j = 0; j < keys2.length; ++j)
+                        object.fields[keys2[j]] = $root.google.protobuf.Value.toObject(message.fields[keys2[j]], options);
+                }
+                return object;
+            };
+
+            /**
+             * Converts this Struct to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.Struct
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            Struct.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            /**
+             * Gets the default type url for Struct
+             * @function getTypeUrl
+             * @memberof google.protobuf.Struct
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            Struct.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/google.protobuf.Struct";
+            };
+
+            return Struct;
+        })();
+
+        protobuf.Value = (function() {
+
+            /**
+             * Properties of a Value.
+             * @memberof google.protobuf
+             * @interface IValue
+             * @property {google.protobuf.NullValue|null} [nullValue] Value nullValue
+             * @property {number|null} [numberValue] Value numberValue
+             * @property {string|null} [stringValue] Value stringValue
+             * @property {boolean|null} [boolValue] Value boolValue
+             * @property {google.protobuf.IStruct|null} [structValue] Value structValue
+             * @property {google.protobuf.IListValue|null} [listValue] Value listValue
+             */
+
+            /**
+             * Constructs a new Value.
+             * @memberof google.protobuf
+             * @classdesc Represents a Value.
+             * @implements IValue
+             * @constructor
+             * @param {google.protobuf.IValue=} [properties] Properties to set
+             */
+            function Value(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Value nullValue.
+             * @member {google.protobuf.NullValue|null|undefined} nullValue
+             * @memberof google.protobuf.Value
+             * @instance
+             */
+            Value.prototype.nullValue = null;
+
+            /**
+             * Value numberValue.
+             * @member {number|null|undefined} numberValue
+             * @memberof google.protobuf.Value
+             * @instance
+             */
+            Value.prototype.numberValue = null;
+
+            /**
+             * Value stringValue.
+             * @member {string|null|undefined} stringValue
+             * @memberof google.protobuf.Value
+             * @instance
+             */
+            Value.prototype.stringValue = null;
+
+            /**
+             * Value boolValue.
+             * @member {boolean|null|undefined} boolValue
+             * @memberof google.protobuf.Value
+             * @instance
+             */
+            Value.prototype.boolValue = null;
+
+            /**
+             * Value structValue.
+             * @member {google.protobuf.IStruct|null|undefined} structValue
+             * @memberof google.protobuf.Value
+             * @instance
+             */
+            Value.prototype.structValue = null;
+
+            /**
+             * Value listValue.
+             * @member {google.protobuf.IListValue|null|undefined} listValue
+             * @memberof google.protobuf.Value
+             * @instance
+             */
+            Value.prototype.listValue = null;
+
+            // OneOf field names bound to virtual getters and setters
+            var $oneOfFields;
+
+            /**
+             * Value kind.
+             * @member {"nullValue"|"numberValue"|"stringValue"|"boolValue"|"structValue"|"listValue"|undefined} kind
+             * @memberof google.protobuf.Value
+             * @instance
+             */
+            Object.defineProperty(Value.prototype, "kind", {
+                get: $util.oneOfGetter($oneOfFields = ["nullValue", "numberValue", "stringValue", "boolValue", "structValue", "listValue"]),
+                set: $util.oneOfSetter($oneOfFields)
+            });
+
+            /**
+             * Creates a new Value instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {google.protobuf.IValue=} [properties] Properties to set
+             * @returns {google.protobuf.Value} Value instance
+             */
+            Value.create = function create(properties) {
+                return new Value(properties);
+            };
+
+            /**
+             * Encodes the specified Value message. Does not implicitly {@link google.protobuf.Value.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {google.protobuf.IValue} message Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Value.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.nullValue != null && Object.hasOwnProperty.call(message, "nullValue"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).int32(message.nullValue);
+                if (message.numberValue != null && Object.hasOwnProperty.call(message, "numberValue"))
+                    writer.uint32(/* id 2, wireType 1 =*/17).double(message.numberValue);
+                if (message.stringValue != null && Object.hasOwnProperty.call(message, "stringValue"))
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.stringValue);
+                if (message.boolValue != null && Object.hasOwnProperty.call(message, "boolValue"))
+                    writer.uint32(/* id 4, wireType 0 =*/32).bool(message.boolValue);
+                if (message.structValue != null && Object.hasOwnProperty.call(message, "structValue"))
+                    $root.google.protobuf.Struct.encode(message.structValue, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+                if (message.listValue != null && Object.hasOwnProperty.call(message, "listValue"))
+                    $root.google.protobuf.ListValue.encode(message.listValue, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+                return writer;
+            };
+
+            /**
+             * Encodes the specified Value message, length delimited. Does not implicitly {@link google.protobuf.Value.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {google.protobuf.IValue} message Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Value.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a Value message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.Value} Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Value.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Value();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1: {
+                            message.nullValue = reader.int32();
+                            break;
+                        }
+                    case 2: {
+                            message.numberValue = reader.double();
+                            break;
+                        }
+                    case 3: {
+                            message.stringValue = reader.string();
+                            break;
+                        }
+                    case 4: {
+                            message.boolValue = reader.bool();
+                            break;
+                        }
+                    case 5: {
+                            message.structValue = $root.google.protobuf.Struct.decode(reader, reader.uint32());
+                            break;
+                        }
+                    case 6: {
+                            message.listValue = $root.google.protobuf.ListValue.decode(reader, reader.uint32());
+                            break;
+                        }
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a Value message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.Value} Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Value.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a Value message.
+             * @function verify
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            Value.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                var properties = {};
+                if (message.nullValue != null && message.hasOwnProperty("nullValue")) {
+                    properties.kind = 1;
+                    switch (message.nullValue) {
+                    default:
+                        return "nullValue: enum value expected";
+                    case 0:
+                        break;
+                    }
+                }
+                if (message.numberValue != null && message.hasOwnProperty("numberValue")) {
+                    if (properties.kind === 1)
+                        return "kind: multiple values";
+                    properties.kind = 1;
+                    if (typeof message.numberValue !== "number")
+                        return "numberValue: number expected";
+                }
+                if (message.stringValue != null && message.hasOwnProperty("stringValue")) {
+                    if (properties.kind === 1)
+                        return "kind: multiple values";
+                    properties.kind = 1;
+                    if (!$util.isString(message.stringValue))
+                        return "stringValue: string expected";
+                }
+                if (message.boolValue != null && message.hasOwnProperty("boolValue")) {
+                    if (properties.kind === 1)
+                        return "kind: multiple values";
+                    properties.kind = 1;
+                    if (typeof message.boolValue !== "boolean")
+                        return "boolValue: boolean expected";
+                }
+                if (message.structValue != null && message.hasOwnProperty("structValue")) {
+                    if (properties.kind === 1)
+                        return "kind: multiple values";
+                    properties.kind = 1;
+                    {
+                        var error = $root.google.protobuf.Struct.verify(message.structValue);
+                        if (error)
+                            return "structValue." + error;
+                    }
+                }
+                if (message.listValue != null && message.hasOwnProperty("listValue")) {
+                    if (properties.kind === 1)
+                        return "kind: multiple values";
+                    properties.kind = 1;
+                    {
+                        var error = $root.google.protobuf.ListValue.verify(message.listValue);
+                        if (error)
+                            return "listValue." + error;
+                    }
+                }
+                return null;
+            };
+
+            /**
+             * Creates a Value message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.Value} Value
+             */
+            Value.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.Value)
+                    return object;
+                var message = new $root.google.protobuf.Value();
+                switch (object.nullValue) {
+                default:
+                    if (typeof object.nullValue === "number") {
+                        message.nullValue = object.nullValue;
+                        break;
+                    }
+                    break;
+                case "NULL_VALUE":
+                case 0:
+                    message.nullValue = 0;
+                    break;
+                }
+                if (object.numberValue != null)
+                    message.numberValue = Number(object.numberValue);
+                if (object.stringValue != null)
+                    message.stringValue = String(object.stringValue);
+                if (object.boolValue != null)
+                    message.boolValue = Boolean(object.boolValue);
+                if (object.structValue != null) {
+                    if (typeof object.structValue !== "object")
+                        throw TypeError(".google.protobuf.Value.structValue: object expected");
+                    message.structValue = $root.google.protobuf.Struct.fromObject(object.structValue);
+                }
+                if (object.listValue != null) {
+                    if (typeof object.listValue !== "object")
+                        throw TypeError(".google.protobuf.Value.listValue: object expected");
+                    message.listValue = $root.google.protobuf.ListValue.fromObject(object.listValue);
+                }
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a Value message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {google.protobuf.Value} message Value
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            Value.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (message.nullValue != null && message.hasOwnProperty("nullValue")) {
+                    object.nullValue = options.enums === String ? $root.google.protobuf.NullValue[message.nullValue] === undefined ? message.nullValue : $root.google.protobuf.NullValue[message.nullValue] : message.nullValue;
+                    if (options.oneofs)
+                        object.kind = "nullValue";
+                }
+                if (message.numberValue != null && message.hasOwnProperty("numberValue")) {
+                    object.numberValue = options.json && !isFinite(message.numberValue) ? String(message.numberValue) : message.numberValue;
+                    if (options.oneofs)
+                        object.kind = "numberValue";
+                }
+                if (message.stringValue != null && message.hasOwnProperty("stringValue")) {
+                    object.stringValue = message.stringValue;
+                    if (options.oneofs)
+                        object.kind = "stringValue";
+                }
+                if (message.boolValue != null && message.hasOwnProperty("boolValue")) {
+                    object.boolValue = message.boolValue;
+                    if (options.oneofs)
+                        object.kind = "boolValue";
+                }
+                if (message.structValue != null && message.hasOwnProperty("structValue")) {
+                    object.structValue = $root.google.protobuf.Struct.toObject(message.structValue, options);
+                    if (options.oneofs)
+                        object.kind = "structValue";
+                }
+                if (message.listValue != null && message.hasOwnProperty("listValue")) {
+                    object.listValue = $root.google.protobuf.ListValue.toObject(message.listValue, options);
+                    if (options.oneofs)
+                        object.kind = "listValue";
+                }
+                return object;
+            };
+
+            /**
+             * Converts this Value to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.Value
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            Value.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            /**
+             * Gets the default type url for Value
+             * @function getTypeUrl
+             * @memberof google.protobuf.Value
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            Value.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/google.protobuf.Value";
+            };
+
+            return Value;
+        })();
+
+        /**
+         * NullValue enum.
+         * @name google.protobuf.NullValue
+         * @enum {number}
+         * @property {number} NULL_VALUE=0 NULL_VALUE value
+         */
+        protobuf.NullValue = (function() {
+            var valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "NULL_VALUE"] = 0;
+            return values;
+        })();
+
+        protobuf.ListValue = (function() {
+
+            /**
+             * Properties of a ListValue.
+             * @memberof google.protobuf
+             * @interface IListValue
+             * @property {Array.<google.protobuf.IValue>|null} [values] ListValue values
+             */
+
+            /**
+             * Constructs a new ListValue.
+             * @memberof google.protobuf
+             * @classdesc Represents a ListValue.
+             * @implements IListValue
+             * @constructor
+             * @param {google.protobuf.IListValue=} [properties] Properties to set
+             */
+            function ListValue(properties) {
+                this.values = [];
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * ListValue values.
+             * @member {Array.<google.protobuf.IValue>} values
+             * @memberof google.protobuf.ListValue
+             * @instance
+             */
+            ListValue.prototype.values = $util.emptyArray;
+
+            /**
+             * Creates a new ListValue instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {google.protobuf.IListValue=} [properties] Properties to set
+             * @returns {google.protobuf.ListValue} ListValue instance
+             */
+            ListValue.create = function create(properties) {
+                return new ListValue(properties);
+            };
+
+            /**
+             * Encodes the specified ListValue message. Does not implicitly {@link google.protobuf.ListValue.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {google.protobuf.IListValue} message ListValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ListValue.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.values != null && message.values.length)
+                    for (var i = 0; i < message.values.length; ++i)
+                        $root.google.protobuf.Value.encode(message.values[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                return writer;
+            };
+
+            /**
+             * Encodes the specified ListValue message, length delimited. Does not implicitly {@link google.protobuf.ListValue.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {google.protobuf.IListValue} message ListValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ListValue.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a ListValue message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.ListValue} ListValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ListValue.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.ListValue();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1: {
+                            if (!(message.values && message.values.length))
+                                message.values = [];
+                            message.values.push($root.google.protobuf.Value.decode(reader, reader.uint32()));
+                            break;
+                        }
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a ListValue message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.ListValue} ListValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ListValue.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a ListValue message.
+             * @function verify
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            ListValue.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.values != null && message.hasOwnProperty("values")) {
+                    if (!Array.isArray(message.values))
+                        return "values: array expected";
+                    for (var i = 0; i < message.values.length; ++i) {
+                        var error = $root.google.protobuf.Value.verify(message.values[i]);
+                        if (error)
+                            return "values." + error;
+                    }
+                }
+                return null;
+            };
+
+            /**
+             * Creates a ListValue message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.ListValue} ListValue
+             */
+            ListValue.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.ListValue)
+                    return object;
+                var message = new $root.google.protobuf.ListValue();
+                if (object.values) {
+                    if (!Array.isArray(object.values))
+                        throw TypeError(".google.protobuf.ListValue.values: array expected");
+                    message.values = [];
+                    for (var i = 0; i < object.values.length; ++i) {
+                        if (typeof object.values[i] !== "object")
+                            throw TypeError(".google.protobuf.ListValue.values: object expected");
+                        message.values[i] = $root.google.protobuf.Value.fromObject(object.values[i]);
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a ListValue message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {google.protobuf.ListValue} message ListValue
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            ListValue.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.arrays || options.defaults)
+                    object.values = [];
+                if (message.values && message.values.length) {
+                    object.values = [];
+                    for (var j = 0; j < message.values.length; ++j)
+                        object.values[j] = $root.google.protobuf.Value.toObject(message.values[j], options);
+                }
+                return object;
+            };
+
+            /**
+             * Converts this ListValue to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.ListValue
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            ListValue.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            /**
+             * Gets the default type url for ListValue
+             * @function getTypeUrl
+             * @memberof google.protobuf.ListValue
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            ListValue.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/google.protobuf.ListValue";
+            };
+
+            return ListValue;
+        })();
+
+        return protobuf;
+    })();
+
+    return google;
 })();
 
 module.exports = $root;

@@ -6,20 +6,20 @@ const $root = require('../proto/message.js');
 
 // Tool mapping between OpenAI function names and Cursor ClientSideToolV2 enum values
 const OPENAI_TO_CURSOR_TOOLS = {
-  'bash': 'RUN_TERMINAL_COMMAND',
-  'run_terminal_command': 'RUN_TERMINAL_COMMAND', 
-  'run_terminal_command_v2': 'RUN_TERMINAL_COMMAND_V2',
-  'read_file': 'READ_FILE',
-  'write_file': 'EDIT_FILE', // Edit file can create/write
-  'create_file': 'CREATE_FILE',
-  'edit_file': 'EDIT_FILE',
-  'delete_file': 'DELETE_FILE',
-  'list_dir': 'LIST_DIR',
-  'file_search': 'FILE_SEARCH',
-  'ripgrep_search': 'RIPGREP_SEARCH',
-  'semantic_search': 'SEMANTIC_SEARCH_FULL',
-  'web_search': 'WEB_SEARCH',
-  'search_symbols': 'SEARCH_SYMBOLS'
+  'bash': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND,
+  'run_terminal_command': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND, 
+  'run_terminal_command_v2': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND_V2,
+  'read_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_READ_FILE,
+  'write_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_EDIT_FILE, // Edit file can create/write
+  'create_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_CREATE_FILE,
+  'edit_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_EDIT_FILE,
+  'delete_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_DELETE_FILE,
+  'list_dir': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_LIST_DIR,
+  'file_search': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_FILE_SEARCH,
+  'ripgrep_search': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH,
+  'semantic_search': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_SEMANTIC_SEARCH_FULL,
+  'web_search': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_WEB_SEARCH,
+  'search_symbols': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS
 };
 
 const CURSOR_TO_OPENAI_TOOLS = Object.fromEntries(
@@ -31,16 +31,12 @@ function transformToolsToClientSideTools(tools) {
   
   return tools.map(tool => {
     const cursorToolType = OPENAI_TO_CURSOR_TOOLS[tool.function.name];
-    if (!cursorToolType) {
+    if (cursorToolType === undefined) {
       throw new Error(`Unsupported tool: ${tool.function.name}. Available tools: ${Object.keys(OPENAI_TO_CURSOR_TOOLS).join(', ')}`);
     }
     
-    return {
-      tool: cursorToolType,
-      name: tool.function.name,
-      description: tool.function.description || '',
-      parameters: tool.function.parameters || {}
-    };
+    // Return just the enum value for the clientSideToolV2s array
+    return cursorToolType;
   });
 }
 
@@ -159,16 +155,18 @@ function generateCursorBody(messages, modelName, tools, toolChoice) {
       largeContext: 0,
       unknown38: 0,
       chatModeEnum: tools && tools.length > 0 ? 2 : 1, // Use agent mode when tools are available
+      // Add client-side tools if provided
+      ...(clientSideTools.length > 0 && {
+        clientSideToolV2s: clientSideTools,
+      }),
       unknown47: "",
       unknown48: 0,
       unknown49: 0,
       unknown51: 0,
       unknown53: 1,
       chatMode: tools && tools.length > 0 ? "Agent" : "Ask",
-      // Add tool configuration if tools are provided
-      ...(clientSideTools.length > 0 && {
-        clientSideTools: clientSideTools,
-        toolChoice: toolChoice || 'auto'
+      ...(toolChoice && {
+        toolChoice: toolChoice
       })
     }
   };

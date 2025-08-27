@@ -1,5 +1,50 @@
 syntax = "proto3";
 
+import "google/protobuf/struct.proto";
+
+enum ClientSideToolV2 {
+  CLIENT_SIDE_TOOL_V2_UNSPECIFIED = 0;
+  CLIENT_SIDE_TOOL_V2_READ_SEMSEARCH_FILES = 1;
+  CLIENT_SIDE_TOOL_V2_READ_FILE_FOR_IMPORTS = 2;
+  CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH = 3;
+  CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND = 4;
+  CLIENT_SIDE_TOOL_V2_READ_FILE = 5;
+  CLIENT_SIDE_TOOL_V2_LIST_DIR = 6;
+  CLIENT_SIDE_TOOL_V2_EDIT_FILE = 7;
+  CLIENT_SIDE_TOOL_V2_FILE_SEARCH = 8;
+  CLIENT_SIDE_TOOL_V2_SEMANTIC_SEARCH_FULL = 9;
+  CLIENT_SIDE_TOOL_V2_CREATE_FILE = 10;
+  CLIENT_SIDE_TOOL_V2_DELETE_FILE = 11;
+  CLIENT_SIDE_TOOL_V2_REAPPLY = 12;
+  CLIENT_SIDE_TOOL_V2_GET_RELATED_FILES = 13;
+  CLIENT_SIDE_TOOL_V2_PARALLEL_APPLY = 14;
+  CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND_V2 = 15;
+  CLIENT_SIDE_TOOL_V2_FETCH_RULES = 16;
+  CLIENT_SIDE_TOOL_V2_PLANNER = 17;
+  CLIENT_SIDE_TOOL_V2_WEB_SEARCH = 18;
+  CLIENT_SIDE_TOOL_V2_MCP = 19;
+  CLIENT_SIDE_TOOL_V2_WEB_VIEWER = 20;
+  CLIENT_SIDE_TOOL_V2_DIFF_HISTORY = 21;
+  CLIENT_SIDE_TOOL_V2_IMPLEMENTER = 22;
+  CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS = 23;
+  CLIENT_SIDE_TOOL_V2_BACKGROUND_COMPOSER_FOLLOWUP = 24;
+}
+
+message ClientSideToolV2Call {
+  ClientSideToolV2 tool = 1;
+  string tool_call_id = 2;
+  string name = 3;
+  google.protobuf.Struct arguments = 4;
+}
+
+message ClientSideToolV2Result {
+  oneof result {
+    string success = 1;
+    string error = 2;
+  }
+  string model_visible_error_message = 3;
+}
+
 message AvailableModelsResponse { 
   message AvailableModel {
     string name = 1;
@@ -91,6 +136,7 @@ message StreamUnifiedChatWithToolsRequest {
     repeated MessageId messageIds = 30;
     int32 largeContext = 35; // 1
     int32 unknown38 = 38; // 0
+    repeated ClientSideToolV2 clientSideToolV2s = 40; // Tool configuration
     int32 chatModeEnum = 46; // 1 for ask, 2 for agent, 3 for edit
     string unknown47 = 47; 
     int32 unknown48 = 48; // 0
@@ -98,6 +144,7 @@ message StreamUnifiedChatWithToolsRequest {
     int32 unknown51 = 51; // 0
     int32 unknown53 = 53; // 0
     string chatMode = 54;
+    string toolChoice = 55; // Tool choice parameter
   }
   
   Request request = 1;
@@ -128,6 +175,9 @@ message StreamUnifiedChatWithToolsResponse {
     MessageThinking thinking = 25;
   }
 
-  Message message = 2;
-  MessageSummary summary = 3;
+  oneof response {
+    ClientSideToolV2Call client_side_tool_v2_call = 1;
+    Message message = 2;
+    MessageSummary summary = 3;
+  }
 }
