@@ -40,8 +40,8 @@ function transformToolsToClientSideTools(tools) {
   });
 }
 
-function processToolMessages(messages) {
-  return messages.map(msg => {
+function processToolMessages(messages, clientSideTools) {
+  return messages.map((msg, index) => {
     if (msg.role === 'tool') {
       // Convert OpenAI tool result to Cursor format
       return {
@@ -68,12 +68,19 @@ function processToolMessages(messages) {
       };
     } else {
       // Regular message processing
-      return {
+      const message = {
         content: msg.content,
         role: msg.role === 'user' ? 1 : 2,
         messageId: uuidv4(),
         ...(msg.role === 'user' ? { chatModeEnum: 1 } : {})
       };
+      
+      // Add supported_tools to the last user message if tools are provided
+      if (msg.role === 'user' && index === messages.length - 1 && clientSideTools.length > 0) {
+        message.supported_tools = clientSideTools;
+      }
+      
+      return message;
     }
   });
 }
@@ -102,13 +109,14 @@ function generateCursorBody(messages, modelName, tools, toolChoice) {
     .map(msg => msg.content)
     .join('\n')
 
-  // Process messages with tool support
-  const formattedMessages = processToolMessages(
-    messages.filter(msg => msg.role !== 'system')
-  );
-
   // Transform OpenAI tools to Cursor format
   const clientSideTools = transformToolsToClientSideTools(tools);
+
+  // Process messages with tool support
+  const formattedMessages = processToolMessages(
+    messages.filter(msg => msg.role !== 'system'),
+    clientSideTools
+  );
 
   const messageIds = formattedMessages.map(msg => {
     const { role, messageId, summaryId } = msg;
@@ -155,10 +163,6 @@ function generateCursorBody(messages, modelName, tools, toolChoice) {
       largeContext: 0,
       unknown38: 0,
       chatModeEnum: tools && tools.length > 0 ? 2 : 1, // Use agent mode when tools are available
-      // Add client-side tools if provided
-      ...(clientSideTools.length > 0 && {
-        clientSideToolV2s: clientSideTools,
-      }),
       unknown47: "",
       unknown48: 0,
       unknown49: 0,
