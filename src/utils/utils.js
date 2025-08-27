@@ -4,22 +4,115 @@ const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const $root = require('../proto/message.js');
 
-function generateCursorBody(messages, modelName) {
+// Tool mapping between OpenAI function names and Cursor ClientSideToolV2 enum values
+const OPENAI_TO_CURSOR_TOOLS = {
+  'bash': 'RUN_TERMINAL_COMMAND',
+  'run_terminal_command': 'RUN_TERMINAL_COMMAND', 
+  'run_terminal_command_v2': 'RUN_TERMINAL_COMMAND_V2',
+  'read_file': 'READ_FILE',
+  'write_file': 'EDIT_FILE', // Edit file can create/write
+  'create_file': 'CREATE_FILE',
+  'edit_file': 'EDIT_FILE',
+  'delete_file': 'DELETE_FILE',
+  'list_dir': 'LIST_DIR',
+  'file_search': 'FILE_SEARCH',
+  'ripgrep_search': 'RIPGREP_SEARCH',
+  'semantic_search': 'SEMANTIC_SEARCH_FULL',
+  'web_search': 'WEB_SEARCH',
+  'search_symbols': 'SEARCH_SYMBOLS'
+};
+
+const CURSOR_TO_OPENAI_TOOLS = Object.fromEntries(
+  Object.entries(OPENAI_TO_CURSOR_TOOLS).map(([k, v]) => [v, k])
+);
+
+function transformToolsToClientSideTools(tools) {
+  if (!tools || !Array.isArray(tools)) return [];
+  
+  return tools.map(tool => {
+    const cursorToolType = OPENAI_TO_CURSOR_TOOLS[tool.function.name];
+    if (!cursorToolType) {
+      throw new Error(`Unsupported tool: ${tool.function.name}. Available tools: ${Object.keys(OPENAI_TO_CURSOR_TOOLS).join(', ')}`);
+    }
+    
+    return {
+      tool: cursorToolType,
+      name: tool.function.name,
+      description: tool.function.description || '',
+      parameters: tool.function.parameters || {}
+    };
+  });
+}
+
+function processToolMessages(messages) {
+  return messages.map(msg => {
+    if (msg.role === 'tool') {
+      // Convert OpenAI tool result to Cursor format
+      return {
+        content: msg.content,
+        role: 2, // assistant role in Cursor
+        messageId: uuidv4(),
+        toolResult: {
+          tool_call_id: msg.tool_call_id,
+          result: msg.content
+        }
+      };
+    } else if (msg.role === 'assistant' && msg.tool_calls) {
+      // Convert OpenAI assistant tool calls to Cursor format
+      return {
+        content: msg.content || '',
+        role: 2,
+        messageId: uuidv4(),
+        toolCalls: msg.tool_calls.map(tc => ({
+          id: tc.id,
+          tool: OPENAI_TO_CURSOR_TOOLS[tc.function.name],
+          name: tc.function.name,
+          arguments: tc.function.arguments
+        }))
+      };
+    } else {
+      // Regular message processing
+      return {
+        content: msg.content,
+        role: msg.role === 'user' ? 1 : 2,
+        messageId: uuidv4(),
+        ...(msg.role === 'user' ? { chatModeEnum: 1 } : {})
+      };
+    }
+  });
+}
+
+function transformCursorToolCallsToOpenAI(cursorToolCall) {
+  if (!cursorToolCall) return null;
+  
+  const openaiToolName = CURSOR_TO_OPENAI_TOOLS[cursorToolCall.tool] || cursorToolCall.tool.toLowerCase();
+  
+  return {
+    id: cursorToolCall.tool_call_id,
+    type: 'function',
+    function: {
+      name: openaiToolName,
+      arguments: typeof cursorToolCall.arguments === 'string' ? 
+        cursorToolCall.arguments : 
+        JSON.stringify(cursorToolCall.arguments || {})
+    }
+  };
+}
+
+function generateCursorBody(messages, modelName, tools, toolChoice) {
 
   const instruction = messages
     .filter(msg => msg.role === 'system')
     .map(msg => msg.content)
     .join('\n')
 
-  const formattedMessages = messages
-    .filter(msg => msg.role !== 'system')
-    .map(msg => ({
-      content: msg.content,
-      role: msg.role === 'user' ? 1 : 2,
-      messageId: uuidv4(),
-      ...(msg.role === 'user' ? { chatModeEnum: 1 } : {})
-      //...(msg.role !== 'user' ? { summaryId: uuidv4() } : {})
-    }));
+  // Process messages with tool support
+  const formattedMessages = processToolMessages(
+    messages.filter(msg => msg.role !== 'system')
+  );
+
+  // Transform OpenAI tools to Cursor format
+  const clientSideTools = transformToolsToClientSideTools(tools);
 
   const messageIds = formattedMessages.map(msg => {
     const { role, messageId, summaryId } = msg;
@@ -65,13 +158,18 @@ function generateCursorBody(messages, modelName) {
       messageIds: messageIds,
       largeContext: 0,
       unknown38: 0,
-      chatModeEnum: 1,
+      chatModeEnum: tools && tools.length > 0 ? 2 : 1, // Use agent mode when tools are available
       unknown47: "",
       unknown48: 0,
       unknown49: 0,
       unknown51: 0,
       unknown53: 1,
-      chatMode: "Ask"
+      chatMode: tools && tools.length > 0 ? "Agent" : "Ask",
+      // Add tool configuration if tools are provided
+      ...(clientSideTools.length > 0 && {
+        clientSideTools: clientSideTools,
+        toolChoice: toolChoice || 'auto'
+      })
     }
   };
 
@@ -97,6 +195,7 @@ function generateCursorBody(messages, modelName) {
 function chunkToUtf8String(chunk) {
   const thinkingOutput = []
   const textOutput = []
+  const toolCalls = []
   const buffer = Buffer.from(chunk, 'hex');
   //console.log("Chunk buffer:", buffer.toString('hex'))
 
@@ -110,6 +209,15 @@ function chunkToUtf8String(chunk) {
       if (magicNumber == 0 || magicNumber == 1) {
         const gunzipData = magicNumber == 0 ? data : zlib.gunzipSync(data)
         const response = $root.StreamUnifiedChatWithToolsResponse.decode(gunzipData);
+
+        // Handle tool calls from Cursor response
+        if (response?.client_side_tool_v2_call) {
+          const toolCall = response.client_side_tool_v2_call;
+          const openaiToolCall = transformCursorToolCallsToOpenAI(toolCall);
+          if (openaiToolCall) {
+            toolCalls.push(openaiToolCall);
+          }
+        }
 
         const thinking = response?.message?.thinking?.content
         if (thinking !== undefined){
@@ -128,12 +236,23 @@ function chunkToUtf8String(chunk) {
         // Json message
         const gunzipData = magicNumber == 2 ? data : zlib.gunzipSync(data)
         const utf8 = gunzipData.toString('utf-8')
-        const message = JSON.parse(utf8)
+        
+        try {
+          const message = JSON.parse(utf8)
+          
+          // Handle tool-related JSON messages
+          if (message?.tool_call_id || message?.tool_calls) {
+            // This might be a tool call or tool result
+            console.log('Tool-related JSON message:', utf8);
+          }
 
-        if (message != null && (typeof message !== 'object' || 
-          (Array.isArray(message) ? message.length > 0 : Object.keys(message).length > 0))){
-            //results.push(utf8)
-            console.error(utf8)
+          if (message != null && (typeof message !== 'object' || 
+            (Array.isArray(message) ? message.length > 0 : Object.keys(message).length > 0))){
+              //results.push(utf8)
+              console.error(utf8)
+          }
+        } catch (parseErr) {
+          console.error('Failed to parse JSON message:', utf8);
         }
 
       }
@@ -149,7 +268,8 @@ function chunkToUtf8String(chunk) {
 
   return {
     thinking: thinkingOutput.join(''), 
-    text: textOutput.join('') 
+    text: textOutput.join(''),
+    toolCalls: toolCalls
   }
 }
 
@@ -192,5 +312,10 @@ module.exports = {
   generateCursorBody,
   chunkToUtf8String,
   generateHashed64Hex,
-  generateCursorChecksum
+  generateCursorChecksum,
+  transformToolsToClientSideTools,
+  processToolMessages,
+  transformCursorToolCallsToOpenAI,
+  OPENAI_TO_CURSOR_TOOLS,
+  CURSOR_TO_OPENAI_TOOLS
 };

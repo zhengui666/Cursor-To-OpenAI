@@ -68,7 +68,7 @@ router.get("/models", async (req, res) => {
 router.post('/chat/completions', async (req, res) => {
 
   try {
-    const { model, messages, stream = false } = req.body;
+    const { model, messages, stream = false, tools, tool_choice } = req.body;
     let bearerToken = req.headers.authorization?.replace('Bearer ', '');
     const keys = bearerToken.split(',').map((key) => key.trim());
     // Randomly select one key to use
@@ -117,7 +117,7 @@ router.post('/chat/completions', async (req, res) => {
       },
     })
     
-    const cursorBody = generateCursorBody(messages, model);
+    const cursorBody = generateCursorBody(messages, model, tools, tool_choice);
     const dispatcher = config.proxy.enabled
       ? new ProxyAgent(config.proxy.url, { allowH2: true })
       : new Agent({ allowH2: true });
@@ -166,8 +166,38 @@ router.post('/chat/completions', async (req, res) => {
       try {
         let thinkingStart = "<thinking>";
         let thinkingEnd = "</thinking>";
+        let hasToolCalls = false;
+        let allToolCalls = [];
+        
         for await (const chunk of response.body) {
-          const { thinking, text } = chunkToUtf8String(chunk);
+          const { thinking, text, toolCalls } = chunkToUtf8String(chunk);
+          
+          // Handle tool calls first
+          if (toolCalls && toolCalls.length > 0) {
+            hasToolCalls = true;
+            allToolCalls.push(...toolCalls);
+            
+            // Send tool call chunks
+            for (const toolCall of toolCalls) {
+              res.write(
+                `data: ${JSON.stringify({
+                  id: responseId,
+                  object: 'chat.completion.chunk',
+                  created: Math.floor(Date.now() / 1000),
+                  model: model,
+                  choices: [{
+                    index: 0,
+                    delta: {
+                      role: 'assistant',
+                      tool_calls: [toolCall]
+                    },
+                  }],
+                })}\n\n`
+              );
+            }
+            continue; // Skip text processing for tool call chunks
+          }
+          
           let content = ""
 
           if (thinkingStart !== "" && thinking.length > 0 ){
@@ -194,6 +224,7 @@ router.post('/chat/completions', async (req, res) => {
                   delta: {
                     content: content,
                   },
+                  finish_reason: hasToolCalls && content.length === 0 ? 'tool_calls' : null
                 }],
               })}\n\n`
             );
@@ -216,8 +247,15 @@ router.post('/chat/completions', async (req, res) => {
         let thinkingStart = "<thinking>";
         let thinkingEnd = "</thinking>";
         let content = '';
+        let allToolCalls = [];
+        
         for await (const chunk of response.body) {
-          const { thinking, text } = chunkToUtf8String(chunk);
+          const { thinking, text, toolCalls } = chunkToUtf8String(chunk);
+          
+          // Collect tool calls
+          if (toolCalls && toolCalls.length > 0) {
+            allToolCalls.push(...toolCalls);
+          }
           
           if (thinkingStart !== "" && thinking.length > 0 ){
             content += thinkingStart + "\n"
@@ -232,6 +270,17 @@ router.post('/chat/completions', async (req, res) => {
           content += text
         }
 
+        // Prepare the response message
+        const message = {
+          role: 'assistant',
+          content: allToolCalls.length > 0 ? null : content,
+        };
+
+        // Add tool calls if present
+        if (allToolCalls.length > 0) {
+          message.tool_calls = allToolCalls;
+        }
+
         return res.json({
           id: `chatcmpl-${uuidv4()}`,
           object: 'chat.completion',
@@ -240,11 +289,8 @@ router.post('/chat/completions', async (req, res) => {
           choices: [
             {
               index: 0,
-              message: {
-                role: 'assistant',
-                content: content,
-              },
-              finish_reason: 'stop',
+              message: message,
+              finish_reason: allToolCalls.length > 0 ? 'tool_calls' : 'stop',
             },
           ],
           usage: {
