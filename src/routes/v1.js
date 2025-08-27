@@ -20,7 +20,7 @@ router.get("/models", async (req, res) => {
 
     const cursorChecksum = req.headers['x-cursor-checksum'] 
       ?? generateCursorChecksum(authToken.trim());
-    const cursorClientVersion = "0.48.7"
+    const cursorClientVersion = "1.1.3"
 
     const availableModelsResponse = await fetch("https://api2.cursor.sh/aiserver.v1.AiService/AvailableModels", {
       method: 'POST',
@@ -92,7 +92,7 @@ router.post('/chat/completions', async (req, res) => {
 
     const sessionid = uuidv5(authToken,  uuidv5.DNS);
     const clientKey = generateHashed64Hex(authToken)
-    const cursorClientVersion = "0.48.7"
+    const cursorClientVersion = "1.1.3"
     const cursorConfigVersion = uuidv4();
 
     // Request the AvailableModels before StreamChat.
@@ -123,6 +123,7 @@ router.post('/chat/completions', async (req, res) => {
       : new Agent({ allowH2: true });
     const response = await fetch('https://api2.cursor.sh/aiserver.v1.ChatService/StreamUnifiedChatWithTools', {
       method: 'POST',
+      http2: true,
       headers: {
         'authorization': `Bearer ${authToken}`,
         'connect-accept-encoding': 'gzip',

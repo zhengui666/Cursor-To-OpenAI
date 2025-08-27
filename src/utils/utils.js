@@ -54,10 +54,10 @@ function generateCursorBody(messages, modelName) {
       //unknown22: 1,
       conversationId: uuidv4(),
       metadata: {
-        os: "win32",
+        os: "linux",
         arch: "x64",
-        version: "10.0.22631",
-        path: "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+        version: "6.13.0",
+        path: "/usr/bin/node",
         timestamp: new Date().toISOString(),
       },
       unknown27: 0,
