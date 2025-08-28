@@ -11,15 +11,35 @@ const OPENAI_TO_CURSOR_TOOLS = {
   'run_terminal_command_v2': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_RUN_TERMINAL_COMMAND_V2,
   'read_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_READ_FILE,
   'write_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_EDIT_FILE, // Edit file can create/write
-  'create_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_CREATE_FILE,
+  'create_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_CREATE_FILE, // Now using correct enum
   'edit_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_EDIT_FILE,
+  'edit': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_EDIT_FILE, // Alternative name for edit_file
+  'multiedit': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_EDIT_FILE, // Multi-file edit mapped to edit_file
   'delete_file': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_DELETE_FILE,
   'list_dir': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_LIST_DIR,
   'file_search': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_FILE_SEARCH,
   'ripgrep_search': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH,
   'semantic_search': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_SEMANTIC_SEARCH_FULL,
   'web_search': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_WEB_SEARCH,
-  'search_symbols': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS
+  'search_symbols': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS,
+  'download': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_WEB_SEARCH, // Map download to web_search as fallback
+  'fetch': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_WEB_SEARCH, // Map fetch to web_search as fallback
+  'glob': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_FILE_SEARCH, // Map glob to file_search (GLOB_FILE_SEARCH not in JS)
+  // Common shell command aliases
+  'grep': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_RIPGREP_SEARCH,
+  'find': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_FILE_SEARCH,
+  'ls': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_LIST_DIR,
+  'cat': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_READ_FILE,
+  'read': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_READ_FILE,
+  'write': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_EDIT_FILE,
+  'sourcegraph': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_SEARCH_SYMBOLS, // Map sourcegraph to search_symbols
+  'view': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_READ_FILE, // Map view to read_file
+  'agent': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_BACKGROUND_COMPOSER_FOLLOWUP, // Map agent to background composer followup
+  'webfetch': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_READ_FILE, // Map webfetch to read_file for web content
+  'list': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_LIST_DIR, // Map list to list_dir for directory listing
+  'todowrite': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_EDIT_FILE, // Map todowrite to edit_file for todo management
+  'todoread': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_READ_FILE, // Map todoread to read_file for todo reading
+  'task': $root.ClientSideToolV2.CLIENT_SIDE_TOOL_V2_BACKGROUND_COMPOSER_FOLLOWUP // Map task to background composer for agent tasks
 };
 
 const CURSOR_TO_OPENAI_TOOLS = Object.fromEntries(
@@ -72,7 +92,7 @@ function processToolMessages(messages, clientSideTools) {
         content: msg.content,
         role: msg.role === 'user' ? 1 : 2,
         messageId: uuidv4(),
-        ...(msg.role === 'user' ? { chatModeEnum: 1 } : {})
+        ...(msg.role === 'user' ? { chatModeEnum: 1 } : {}) // Use Ask mode consistently
       };
       
       // Add supported_tools to the last user message if tools are provided
@@ -102,12 +122,108 @@ function transformCursorToolCallsToOpenAI(cursorToolCall) {
   };
 }
 
+function parseToolCallsFromResponse(content) {
+  // Parse tool calls from structured response format
+  const toolCalls = [];
+  
+  // First try the structured format with name/arguments tags
+  const structuredToolCallRegex = /<tool_call>\s*<name>(.*?)<\/name>\s*<arguments>(.*?)<\/arguments>\s*<\/tool_call>/gs;
+  let match;
+  while ((match = structuredToolCallRegex.exec(content)) !== null) {
+    const toolName = match[1].trim();
+    const argumentsStr = match[2].trim();
+    
+    try {
+      JSON.parse(argumentsStr); // Validate JSON
+      toolCalls.push({
+        id: `call_${uuidv4().replace(/-/g, '').substr(0, 24)}`,
+        type: 'function',
+        function: {
+          name: toolName,
+          arguments: argumentsStr
+        }
+      });
+    } catch (error) {
+      console.error('Failed to parse structured tool arguments:', argumentsStr, error);
+    }
+  }
+  
+  // If no structured tool calls found, try the simple format
+  if (toolCalls.length === 0) {
+    const simpleToolCallRegex = /<tool_call>\s*(.*?)\s+(.*?)\s*<\/tool_call>/gs;
+    while ((match = simpleToolCallRegex.exec(content)) !== null) {
+      const toolName = match[1].trim();
+      const argumentsStr = match[2].trim();
+      
+      try {
+        JSON.parse(argumentsStr); // Validate JSON
+        toolCalls.push({
+          id: `call_${uuidv4().replace(/-/g, '').substr(0, 24)}`,
+          type: 'function',
+          function: {
+            name: toolName,
+            arguments: argumentsStr
+          }
+        });
+      } catch (error) {
+        console.error('Failed to parse simple tool arguments:', argumentsStr, error);
+      }
+    }
+  }
+  
+  return toolCalls;
+}
+
+function removeToolCallsFromContent(content) {
+  // Remove tool call tags from content to get clean response
+  let cleanContent = content;
+  
+  // Remove structured format tool calls
+  cleanContent = cleanContent.replace(/<tool_call>\s*<name>.*?<\/name>\s*<arguments>.*?<\/arguments>\s*<\/tool_call>/gs, '');
+  
+  // Remove simple format tool calls
+  cleanContent = cleanContent.replace(/<tool_call>\s*.*?\s+.*?\s*<\/tool_call>/gs, '');
+  
+  return cleanContent.trim();
+}
+
 function generateCursorBody(messages, modelName, tools, toolChoice) {
 
-  const instruction = messages
+  // Get existing system messages
+  const existingInstructions = messages
     .filter(msg => msg.role === 'system')
     .map(msg => msg.content)
-    .join('\n')
+    .join('\n');
+
+  // Create tool calling instruction if tools are provided
+  let toolInstruction = '';
+  if (tools && tools.length > 0) {
+    const toolDescriptions = tools.map(tool => {
+      const func = tool.function;
+      return `- ${func.name}: ${func.description}`;
+    }).join('\n');
+
+    toolInstruction = `
+TOOL CALLING INSTRUCTIONS:
+You have access to the following tools:
+${toolDescriptions}
+
+When you need to use a tool, format your response EXACTLY like this:
+<tool_call>
+tool_name
+{"param": "value"}
+</tool_call>
+
+Important:
+- Use the exact tool names provided  
+- Arguments must be valid JSON on a separate line
+- You can make multiple tool calls in one response
+- Always provide the tool_call tags exactly as shown
+- Put the tool name and arguments on separate lines inside the tags
+`;
+  }
+
+  const instruction = existingInstructions + toolInstruction;
 
   // Transform OpenAI tools to Cursor format
   const clientSideTools = transformToolsToClientSideTools(tools);
@@ -148,7 +264,7 @@ function generateCursorBody(messages, modelName, tools, toolChoice) {
         unknown9: 1
       },
       unknown19: 1,
-      //unknown22: 1,
+      unknown22: 1, // Enable background composer support
       conversationId: uuidv4(),
       metadata: {
         os: "linux",
@@ -158,17 +274,17 @@ function generateCursorBody(messages, modelName, tools, toolChoice) {
         timestamp: new Date().toISOString(),
       },
       unknown27: 0,
-      //unknown29: "",
+      unknown29: `bc-${uuidv4().replace(/-/g, '').substr(0, 16)}`, // Background composer ID
       messageIds: messageIds,
       largeContext: 0,
       unknown38: 0,
-      chatModeEnum: tools && tools.length > 0 ? 2 : 1, // Use agent mode when tools are available
+      chatModeEnum: 1, // Use Ask mode for tool calling
       unknown47: "",
       unknown48: 0,
       unknown49: 0,
       unknown51: 0,
       unknown53: 1,
-      chatMode: tools && tools.length > 0 ? "Agent" : "Ask",
+      chatMode: "Ask", // Use Ask mode for tool calling
       ...(toolChoice && {
         toolChoice: toolChoice
       })
@@ -318,6 +434,8 @@ module.exports = {
   transformToolsToClientSideTools,
   processToolMessages,
   transformCursorToolCallsToOpenAI,
+  parseToolCallsFromResponse,
+  removeToolCallsFromContent,
   OPENAI_TO_CURSOR_TOOLS,
   CURSOR_TO_OPENAI_TOOLS
 };

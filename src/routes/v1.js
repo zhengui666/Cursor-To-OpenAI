@@ -5,12 +5,14 @@ const { fetch, ProxyAgent, Agent } = require('undici');
 const { v4: uuidv4, v5: uuidv5 } = require('uuid');
 const config = require('../config/config');
 const $root = require('../proto/message.js');
-const { generateCursorBody, chunkToUtf8String, generateHashed64Hex, generateCursorChecksum } = require('../utils/utils.js');
+const { generateCursorBody, chunkToUtf8String, generateHashed64Hex, generateCursorChecksum, parseToolCallsFromResponse, removeToolCallsFromContent } = require('../utils/utils.js');
+const cursorAuth = require('../services/cursorAuth');
 
 router.get("/models", async (req, res) => {
   try{
-    let bearerToken = req.headers.authorization?.replace('Bearer ', '');
-    let authToken = bearerToken.split(',').map((key) => key.trim())[0];
+    // Use local Cursor auth token instead of requiring it from request
+    let authToken = await cursorAuth.extractBearerToken();
+    
     if (authToken && authToken.includes('%3A%3A')) {
       authToken = authToken.split('%3A%3A')[1];
     }
@@ -69,14 +71,13 @@ router.post('/chat/completions', async (req, res) => {
 
   try {
     const { model, messages, stream = false, tools, tool_choice } = req.body;
-    let bearerToken = req.headers.authorization?.replace('Bearer ', '');
-    const keys = bearerToken.split(',').map((key) => key.trim());
-    // Randomly select one key to use
-    let authToken = keys[Math.floor(Math.random() * keys.length)]
+    
+    // Use local Cursor auth token instead of requiring it from request
+    let authToken = await cursorAuth.extractBearerToken();
 
-    if (!messages || !Array.isArray(messages) || messages.length === 0 || !authToken) {
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({
-        error: 'Invalid request. Messages should be a non-empty array and authorization is required',
+        error: 'Invalid request. Messages should be a non-empty array',
       });
     }
 
@@ -169,16 +170,34 @@ router.post('/chat/completions', async (req, res) => {
         let hasToolCalls = false;
         let allToolCalls = [];
         
+        let fullContent = '';
+        
         for await (const chunk of response.body) {
-          const { thinking, text, toolCalls } = chunkToUtf8String(chunk);
+          const { thinking, text } = chunkToUtf8String(chunk);
           
-          // Handle tool calls first
-          if (toolCalls && toolCalls.length > 0) {
+          let content = ""
+
+          if (thinkingStart !== "" && thinking.length > 0 ){
+            content += thinkingStart + "\n"
+            thinkingStart = ""
+          }
+          content += thinking
+          if (thinkingEnd !== "" && thinking.length === 0 && text.length !== 0 && thinkingStart === "") {
+            content += "\n" + thinkingEnd + "\n"
+            thinkingEnd = ""
+          }
+
+          content += text
+          fullContent += content
+
+          // Check for tool calls in the accumulated content
+          const toolCallsInContent = parseToolCallsFromResponse(fullContent);
+          if (toolCallsInContent.length > 0 && !hasToolCalls) {
             hasToolCalls = true;
-            allToolCalls.push(...toolCalls);
+            allToolCalls.push(...toolCallsInContent);
             
             // Send tool call chunks
-            for (const toolCall of toolCalls) {
+            for (const toolCall of toolCallsInContent) {
               res.write(
                 `data: ${JSON.stringify({
                   id: responseId,
@@ -195,24 +214,28 @@ router.post('/chat/completions', async (req, res) => {
                 })}\n\n`
               );
             }
-            continue; // Skip text processing for tool call chunks
-          }
-          
-          let content = ""
-
-          if (thinkingStart !== "" && thinking.length > 0 ){
-            content += thinkingStart + "\n"
-            thinkingStart = ""
-          }
-          content += thinking
-          if (thinkingEnd !== "" && thinking.length === 0 && text.length !== 0 && thinkingStart === "") {
-            content += "\n" + thinkingEnd + "\n"
-            thinkingEnd = ""
-          }
-
-          content += text
-
-          if (content.length > 0) {
+            
+            // Send clean content without tool call tags
+            const cleanContent = removeToolCallsFromContent(fullContent);
+            if (cleanContent.length > 0) {
+              res.write(
+                `data: ${JSON.stringify({
+                  id: responseId,
+                  object: 'chat.completion.chunk',
+                  created: Math.floor(Date.now() / 1000),
+                  model: model,
+                  choices: [{
+                    index: 0,
+                    delta: {
+                      content: cleanContent,
+                    },
+                    finish_reason: 'tool_calls'
+                  }],
+                })}\n\n`
+              );
+            }
+          } else if (!hasToolCalls && content.length > 0) {
+            // Send regular content chunks if no tool calls detected yet
             res.write(
               `data: ${JSON.stringify({
                 id: responseId,
@@ -224,7 +247,7 @@ router.post('/chat/completions', async (req, res) => {
                   delta: {
                     content: content,
                   },
-                  finish_reason: hasToolCalls && content.length === 0 ? 'tool_calls' : null
+                  finish_reason: null
                 }],
               })}\n\n`
             );
@@ -250,12 +273,7 @@ router.post('/chat/completions', async (req, res) => {
         let allToolCalls = [];
         
         for await (const chunk of response.body) {
-          const { thinking, text, toolCalls } = chunkToUtf8String(chunk);
-          
-          // Collect tool calls
-          if (toolCalls && toolCalls.length > 0) {
-            allToolCalls.push(...toolCalls);
-          }
+          const { thinking, text } = chunkToUtf8String(chunk);
           
           if (thinkingStart !== "" && thinking.length > 0 ){
             content += thinkingStart + "\n"
@@ -270,10 +288,14 @@ router.post('/chat/completions', async (req, res) => {
           content += text
         }
 
+        // Parse tool calls from the full content
+        allToolCalls = parseToolCallsFromResponse(content);
+        const cleanContent = allToolCalls.length > 0 ? removeToolCallsFromContent(content) : content;
+
         // Prepare the response message
         const message = {
           role: 'assistant',
-          content: allToolCalls.length > 0 ? null : content,
+          content: allToolCalls.length > 0 ? cleanContent : content,
         };
 
         // Add tool calls if present
