@@ -35,21 +35,15 @@ Then edit the `.env` file to configure the following environment variables:
 
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
-| `PORT` | Server listening port | `3010` | No |
 | `CURSOR_CLIENT_VERSION` | Cursor client version | `1.1.3` | No |
 | `CURSOR_TIMEZONE` | Timezone configuration | `Asia/Shanghai` | No |
-| `MORGAN_FORMAT` | Log format (combined/common/dev/short/tiny) | `tiny` | No |
-| `CURSOR_COOKIE` | Cursor authentication cookie (for manual auth) | - | No |
 
 **Configuration Example:**
 
 ```bash
 # .env
-PORT=3010
 CURSOR_CLIENT_VERSION=1.1.3
 CURSOR_TIMEZONE=Asia/Shanghai
-MORGAN_FORMAT=tiny
-# CURSOR_COOKIE=your_cookie_here  # Only needed if auto-auth fails
 ```
 
 > **Note:** If you don't create a `.env` file, the project will use default configuration values. In most cases, the default configuration works fine.
