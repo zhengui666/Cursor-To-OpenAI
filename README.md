@@ -21,6 +21,33 @@ This bridge converts Cursor Editor's AI chat interface into a fully OpenAI-compa
 2. **Active Cursor account** with available credits
 3. **Node.js** (version 14 or higher)
 
+## Configuration
+
+### Environment Variables
+
+The project supports configuration through a `.env` file. First, copy the example configuration file:
+
+```bash
+cp .env.example .env
+```
+
+Then edit the `.env` file to configure the following environment variables:
+
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `CURSOR_CLIENT_VERSION` | Cursor client version | `1.1.3` | No |
+| `CURSOR_TIMEZONE` | Timezone configuration | `Asia/Shanghai` | No |
+
+**Configuration Example:**
+
+```bash
+# .env
+CURSOR_CLIENT_VERSION=1.1.3
+CURSOR_TIMEZONE=Asia/Shanghai
+```
+
+> **Note:** If you don't create a `.env` file, the project will use default configuration values. In most cases, the default configuration works fine.
+
 ## Quick Start
 
 ### Installation
