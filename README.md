@@ -25,23 +25,23 @@ This bridge converts Cursor Editor's AI chat interface into a fully OpenAI-compa
 
 ### Environment Variables
 
-项目支持通过 `.env` 文件进行配置。首先复制示例配置文件：
+The project supports configuration through a `.env` file. First, copy the example configuration file:
 
 ```bash
 cp .env.example .env
 ```
 
-然后编辑 `.env` 文件，配置以下环境变量：
+Then edit the `.env` file to configure the following environment variables:
 
-| 变量名 | 说明 | 默认值 | 必填 |
-|--------|------|--------|------|
-| `PORT` | 服务器监听端口 | `3010` | 否 |
-| `CURSOR_CLIENT_VERSION` | Cursor 客户端版本 | `1.1.3` | 否 |
-| `CURSOR_TIMEZONE` | 时区配置 | `Asia/Shanghai` | 否 |
-| `MORGAN_FORMAT` | 日志格式 (combined/common/dev/short/tiny) | `tiny` | 否 |
-| `CURSOR_COOKIE` | Cursor 认证 Cookie（手动认证时使用） | - | 否 |
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `PORT` | Server listening port | `3010` | No |
+| `CURSOR_CLIENT_VERSION` | Cursor client version | `1.1.3` | No |
+| `CURSOR_TIMEZONE` | Timezone configuration | `Asia/Shanghai` | No |
+| `MORGAN_FORMAT` | Log format (combined/common/dev/short/tiny) | `tiny` | No |
+| `CURSOR_COOKIE` | Cursor authentication cookie (for manual auth) | - | No |
 
-**配置示例：**
+**Configuration Example:**
 
 ```bash
 # .env
@@ -49,10 +49,10 @@ PORT=3010
 CURSOR_CLIENT_VERSION=1.1.3
 CURSOR_TIMEZONE=Asia/Shanghai
 MORGAN_FORMAT=tiny
-# CURSOR_COOKIE=your_cookie_here  # 仅在自动认证失败时使用
+# CURSOR_COOKIE=your_cookie_here  # Only needed if auto-auth fails
 ```
 
-> **注意：** 如果不创建 `.env` 文件，项目将使用默认配置值。大多数情况下，默认配置即可正常工作。
+> **Note:** If you don't create a `.env` file, the project will use default configuration values. In most cases, the default configuration works fine.
 
 ## Quick Start
 
