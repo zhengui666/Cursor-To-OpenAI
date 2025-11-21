@@ -12,7 +12,7 @@ class CursorAuthService {
 
   getCursorStoragePath() {
     const homeDir = os.homedir();
-    
+
     // Try different possible locations for Cursor storage (same as Python version)
     const possiblePaths = [
       path.join(homeDir, '.config', 'Cursor', 'User', 'globalStorage', 'state.vscdb'),
@@ -31,6 +31,17 @@ class CursorAuthService {
     throw new Error('Could not find Cursor storage file');
   }
 
+  getCursorAuthJsonPath() {
+    const homeDir = os.homedir();
+    const authJsonPath = path.join(homeDir, '.config', 'cursor', 'auth.json');
+
+    if (fs.existsSync(authJsonPath)) {
+      return authJsonPath;
+    }
+
+    throw new Error('Could not find Cursor auth.json file');
+  }
+
   extractBearerToken() {
     // Use cached token if still valid
     if (this.cachedToken && (Date.now() - this.cacheTime) < this.cacheTimeout) {
@@ -39,26 +50,50 @@ class CursorAuthService {
 
     return new Promise((resolve, reject) => {
       try {
+        // Check if CLI mode is enabled
+        const isCliMode = process.env.CURSOR_CLI === 'true';
+
+        if (isCliMode) {
+          // CLI mode: read from ~/.config/cursor/auth.json
+          try {
+            const authJsonPath = this.getCursorAuthJsonPath();
+            const fileContent = fs.readFileSync(authJsonPath, 'utf8');
+            const authData = JSON.parse(fileContent);
+
+            if (authData.accessToken) {
+              this.cachedToken = authData.accessToken;
+              this.cacheTime = Date.now();
+              resolve(authData.accessToken);
+            } else {
+              reject(new Error('No accessToken found in auth.json'));
+            }
+          } catch (err) {
+            reject(new Error(`Failed to read auth.json: ${err.message}`));
+          }
+          return;
+        }
+
+        // Default mode: read from SQLite database
         const storagePath = this.getCursorStoragePath();
-        
+
         // Open SQLite connection like the Python version
         const db = new sqlite3.Database(storagePath, sqlite3.OPEN_READONLY, (err) => {
           if (err) {
             reject(new Error(`Could not open SQLite database: ${err.message}`));
             return;
           }
-          
+
           // Try different table names that might store the data
           const tables = ['ItemTable', 'cursorDiskKV'];
           let foundToken = null;
           let completedTables = 0;
-          
+
           tables.forEach(tableName => {
             const query = `SELECT key, value FROM ${tableName} WHERE key LIKE 'cursorAuth/%'`;
-            
+
             db.all(query, [], (err, rows) => {
               completedTables++;
-              
+
               if (!err && rows) {
                 rows.forEach(row => {
                   if (row.key === 'cursorAuth/accessToken') {
@@ -76,11 +111,11 @@ class CursorAuthService {
                   }
                 });
               }
-              
+
               // Check if we've processed all tables
               if (completedTables === tables.length) {
                 db.close();
-                
+
                 if (foundToken) {
                   this.cachedToken = foundToken;
                   this.cacheTime = Date.now();
@@ -92,7 +127,7 @@ class CursorAuthService {
             });
           });
         });
-        
+
       } catch (error) {
         console.error('Error reading Cursor auth token:', error.message);
         reject(error);
